@@ -5,13 +5,17 @@ export default {
       if (localStorage.getItem("products")) {
         const prods = JSON.parse(localStorage.getItem("products"));
         commit("setProducts", prods);
-        console.log("ENTOU AQUI!!!!!!");
         return;
       }
       const response = await fetch("https://fakestoreapi.com/products");
       const products = await response.json();
-      localStorage.setItem("products", JSON.stringify(products));
-      commit("setProducts", products);
+      const pDiscount = products.map((e) => ({
+        discount: Number((Math.random() * 100) / 3).toFixed(0),
+        checked: false,
+        ...e,
+      }));
+      localStorage.setItem("products", JSON.stringify(pDiscount));
+      commit("setProducts", pDiscount);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
     }

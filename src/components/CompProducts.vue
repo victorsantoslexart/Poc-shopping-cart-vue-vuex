@@ -5,21 +5,31 @@
     <table>
       <thead>
         <tr>
-          <th><input type="checkbox" /></th>
+          <th>
+            <input type="checkbox" v-model="selectAll" @change="toggleAll" />
+          </th>
           <th>Name</th>
           <th>Description</th>
           <th>Price</th>
-          <th>Category</th>
+          <th>Discount</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in getProducts" :key="product.id">
-          <input type="checkbox" />
+          <input
+            v-model="product.checked"
+            @change="changeChecked"
+            type="checkbox"
+          />
           <td>{{ product.title }}</td>
           <td class="description">{{ product.description }}</td>
           <td>{{ product.price }}</td>
-          <td>{{ product.category }}</td>
-          <button type="button" class="button-with-svg">
+          <td>{{ product.discount }}%</td>
+          <button
+            type="button"
+            @click="addToActualProducts(product)"
+            class="button-with-svg"
+          >
             <svg
               class="icon"
               width="800px"
@@ -44,7 +54,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 // console.log(this.$store.products);
 export default {
@@ -54,8 +64,40 @@ export default {
   // computed: mapGetters([
   //   'getProducts'
   // ]),
-  computed: mapGetters(["getProducts"]),
   name: "CompProducts",
+  computed: {
+    ...mapGetters(["getProducts"]),
+    selectAll: {
+      get() {
+        // Verificar se todos os produtos estão selecionados
+        return this.getProducts.every((product) => product.checked);
+      },
+      set(value) {
+        // Marcar ou desmarcar todos os produtos com base na checkbox "Select All"
+        this.getProducts.forEach((product) => {
+          product.checked = value;
+        });
+        this.setProducts(this.getProducts);
+      },
+    },
+  },
+  methods: {
+    ...mapMutations(["addActualProduct", "setProducts"]),
+    addToActualProducts(product) {
+      this.addActualProduct(product);
+    },
+    toggleAll(event) {
+      // Marcar ou desmarcar todos os produtos com base na checkbox "Select All"
+      this.selectAll = event.target.checked;
+    },
+    changeChecked(e) {
+      const newProds = this.getProducts.map((p) => ({
+        checked: e.target.checked,
+        ...p,
+      }));
+      this.setProducts(newProds);
+    },
+  },
 };
 </script>
 
