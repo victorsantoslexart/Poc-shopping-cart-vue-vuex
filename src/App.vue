@@ -1,20 +1,17 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+  <div id="app" class="flex flex-col">
+    <img alt="Vue logo" class="self-center" src="./assets/logo.png" />
     <CompProducts />
-    <ChangeProducts />
   </div>
 </template>
 
 <script>
-import ChangeProducts from "./components/ChangeProducts.vue";
 import CompProducts from "./components/CompProducts.vue";
 
 export default {
   name: "App",
   components: {
     CompProducts,
-    ChangeProducts,
   },
 };
 </script>

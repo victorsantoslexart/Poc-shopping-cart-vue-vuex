@@ -15,6 +15,7 @@ export default {
         ...e,
       }));
       localStorage.setItem("products", JSON.stringify(pDiscount));
+      localStorage.setItem("originalProducts", JSON.stringify(pDiscount));
       commit("setProducts", pDiscount);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -22,6 +23,12 @@ export default {
   },
   async reFetchProducts({ commit, _state }) {
     try {
+      if (localStorage.getItem("originalProducts")) {
+        const prods = JSON.parse(localStorage.getItem("originalProducts"));
+        commit("setProducts", prods);
+        commit("addActualProduct", {});
+        return;
+      }
       const response = await fetch("https://fakestoreapi.com/products");
       const products = await response.json();
       const pDiscount = products.map((e) => ({
