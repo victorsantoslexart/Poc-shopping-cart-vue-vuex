@@ -43,7 +43,7 @@
               </td>
               <td class="p-2">{{ product.title }}</td>
               <td
-                class="p-2 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px]"
+                class="p-2 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-44"
               >
                 {{ product.description }}
               </td>
