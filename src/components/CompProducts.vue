@@ -7,11 +7,11 @@
           Select the products you want to edit and make changes below
         </h3>
         <div
-          class="overflow-y-auto h-72 border-collapse border-slate-200 border-2 table-auto rounded-3xl group"
+          class="overflow-y-auto h-72 border-collapse border-slate-200 border-2 table-auto rounded-xl group"
         >
           <table class="min-w-full overflow-y-auto">
             <thead class="border-b border-neutral-200 font-medium">
-              <tr>
+              <tr class="text-left text-slate-400">
                 <th class="p-2">
                   <input
                     type="checkbox"
@@ -26,7 +26,7 @@
                 <th class="p-2">Discount</th>
               </tr>
             </thead>
-            <tbody class="bg-whitesmoke text-black">
+            <tbody class="bg-whitesmoke text-left text-black">
               <tr
                 v-for="product in getProducts"
                 :key="product.id"
