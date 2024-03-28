@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="flex flex-col">
-    <img alt="Vue logo" class="self-center" src="./assets/logo.png" />
+    <!-- <img alt="Vue logo" class="self-center" src="./assets/logo.png" /> -->
     <CompProducts />
   </div>
 </template>

@@ -1,79 +1,79 @@
 <template>
   <div class="products">
-    <h1 class="text-2xl font-bold mb-4">Products</h1>
-    <h3 class="text-lg mt-0 mb-4">
-      Select the products you want to edit and make changes below
-    </h3>
-    <div class="flex justify-evenly items-start overflow-x-auto">
-      <div
-        class="overflow-auto max-h-[300px] w-[50%] mt-[60px] flex self-center justify-center"
-      >
-        <table class="w-full border-collapse table-auto overflow-scroll">
-          <thead>
-            <tr>
-              <th class="p-2">
-                <input
-                  type="checkbox"
-                  v-model="selectAll"
-                  @change="toggleAll"
-                  class="mr-2"
-                />
-              </th>
-              <th class="p-2">Name</th>
-              <th class="p-2">Description</th>
-              <th class="p-2">Price</th>
-              <th class="p-2">Discount</th>
-            </tr>
-          </thead>
-          <tbody
-            class="bg-whitesmoke text-black max-h-[160px] overflow-y-auto custom-scroll"
-          >
-            <tr
-              v-for="product in getProducts"
-              :key="product.id"
-              class="border-b"
-            >
-              <td class="p-2">
-                <input
-                  v-model="product.checked"
-                  @change="changeChecked"
-                  type="checkbox"
-                  class="mr-2"
-                />
-              </td>
-              <td class="p-2">{{ product.title }}</td>
-              <td
-                class="p-2 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[20ch]"
+    <div class="flex justify-left gap-x-10 ml-10 items-start">
+      <div class="max-h-[300px] w-[50%]">
+        <h1 class="text-2xl text-left font-bold mb-4">Products</h1>
+        <h3 class="text-lg text-left mt-0 mb-4">
+          Select the products you want to edit and make changes below
+        </h3>
+        <div
+          class="overflow-y-auto h-72 border-collapse border-slate-200 border-2 table-auto rounded-3xl group"
+        >
+          <table class="min-w-full overflow-y-auto">
+            <thead class="border-b border-neutral-200 font-medium">
+              <tr>
+                <th class="p-2">
+                  <input
+                    type="checkbox"
+                    v-model="selectAll"
+                    @change="toggleAll"
+                    class="mr-2"
+                  />
+                </th>
+                <th class="p-2">Name</th>
+                <th class="p-2">Description</th>
+                <th class="p-2">Price</th>
+                <th class="p-2">Discount</th>
+              </tr>
+            </thead>
+            <tbody class="bg-whitesmoke text-black">
+              <tr
+                v-for="product in getProducts"
+                :key="product.id"
+                class="border-b"
               >
-                {{ product.description }}
-              </td>
-              <td class="p-2">{{ product.price }}</td>
-              <td class="p-2">{{ product.discount }}%</td>
-              <td class="p-2">
-                <button
-                  @click="addToActualProducts(product)"
-                  type="button"
-                  class="flex items-center justify-center px-4 py-2 bg-whitesmoke text-white text-16 cursor-pointer"
+                <td class="p-2">
+                  <input
+                    v-model="product.checked"
+                    @change="changeChecked"
+                    type="checkbox"
+                    class="mr-2"
+                  />
+                </td>
+                <td class="p-2">{{ product.title }}</td>
+                <td
+                  class="p-2 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[20ch]"
                 >
-                  <svg
-                    class="w-6 h-6 mr-2"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  {{ product.description }}
+                </td>
+                <td class="p-2">{{ product.price }}</td>
+                <td class="p-2">{{ product.discount }}%</td>
+                <td class="p-2">
+                  <button
+                    @click="addToActualProducts(product)"
+                    type="button"
+                    class="flex items-center justify-center px-4 py-2 bg-white text-white text-16 cursor-pointer"
                   >
-                    <rect width="24" height="24" fill="whitesmoke" />
-                    <path
-                      d="M9.5 7L14.5 12L9.5 17"
-                      stroke="#000000"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <svg
+                      class="w-6 h-6 mr-2"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="24" height="24" fill="white" />
+                      <path
+                        d="M9.5 7L14.5 12L9.5 17"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <ChangeProducts class="ml-4" />
     </div>

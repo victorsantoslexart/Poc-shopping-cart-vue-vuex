@@ -1,7 +1,12 @@
 <template>
-  <form name="changer" class="max-w-sm mt-8">
+  <form
+    name="changer"
+    class="w-2/6 flex flex-col grid-cols-1 justify-left mt-8"
+  >
     <div class="mb-4">
-      <label for="name" class="block text-sm font-semibold mb-1">Name:</label>
+      <label for="name" class="block text-sm text-left font-semibold mb-1"
+        >Name:</label
+      >
       <input
         type="text"
         name="name"
@@ -11,19 +16,21 @@
       />
     </div>
     <div class="mb-4">
-      <label for="desc" class="block text-sm font-semibold mb-1"
+      <label for="desc" class="block text-sm text-left font-semibold mb-1"
         >Description:</label
       >
-      <input
+      <textarea
         type="text"
         name="desc"
         id="desc"
         v-model="localProduct.description"
-        class="w-full border border-gray-300 rounded px-3 py-2"
+        class="w-full border border-gray-300 h-28 rounded px-3 py-2"
       />
     </div>
     <div class="mb-4">
-      <label for="price" class="block text-sm font-semibold mb-1">Price:</label>
+      <label for="price" class="block text-sm text-left font-semibold mb-1"
+        >Price:</label
+      >
       <input
         type="text"
         name="price"
@@ -33,9 +40,9 @@
       />
     </div>
     <div class="mb-4">
-      <label for="disc" class="block text-sm font-semibold mb-1"
-        >Discount:</label
-      >
+      <label for="disc" class="block text-sm text-left font-semibold mb-1">
+        Discount:
+      </label>
       <input
         type="text"
         name="disc"
@@ -44,12 +51,12 @@
         class="w-full border border-gray-300 rounded px-3 py-2"
       />
     </div>
-    <div class="flex justify-center">
+    <div class="flex mt-32 justify-left">
       <button
         form="changer"
         type="button"
         @click="saveChanges"
-        class="mr-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        class="mr-2 px-4 py-2 bg-black text-white rounded hover:bg-dark-600"
       >
         Save
       </button>
@@ -57,7 +64,7 @@
         form="changer"
         type="button"
         @click="cancelChanges"
-        class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+        class="px-4 py-2 bg-black text-white rounded hover:bg-dark-400"
       >
         Cancel
       </button>
