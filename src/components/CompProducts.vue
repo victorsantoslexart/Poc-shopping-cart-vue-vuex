@@ -84,24 +84,15 @@
 import { mapGetters, mapMutations } from "vuex";
 import ChangeProducts from "./ChangeProducts.vue";
 
-// console.log(this.$store.products);
 export default {
-  // mounted() {
-  //   this.getProducts();
-  // },
-  // computed: mapGetters([
-  //   'getProducts'
-  // ]),
   name: "CompProducts",
   computed: {
     ...mapGetters(["getProducts"]),
     selectAll: {
       get() {
-        // Verificar se todos os produtos estão selecionados
         return this.getProducts.every((product) => product.checked);
       },
       set(value) {
-        // Marcar ou desmarcar todos os produtos com base na checkbox "Select All"
         this.getProducts.forEach((product) => {
           product.checked = value;
         });
@@ -115,7 +106,6 @@ export default {
       this.addActualProduct(product);
     },
     toggleAll(event) {
-      // Marcar ou desmarcar todos os produtos com base na checkbox "Select All"
       this.selectAll = event.target.checked;
     },
     changeChecked(e) {

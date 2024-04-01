@@ -93,7 +93,6 @@ export default {
     async cancelChanges() {
       await this.reFetchProducts();
       this.localProduct = {};
-      // this.addActualProduct({});
     },
     saveChanges() {
       this.addActualProduct(this.localProduct);
