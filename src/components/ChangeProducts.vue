@@ -82,8 +82,9 @@ export default {
       get() {
         return { ...this.getActualProduct };
       },
+      // eslint-disable-next-line no-unused-vars
       set(value) {
-        this.updateActualProduct(value);
+        // this.updateActualProduct({ ...value });
       },
     },
   },
@@ -92,15 +93,20 @@ export default {
     ...mapActions(["reFetchProducts"]),
     async cancelChanges() {
       await this.reFetchProducts();
-      this.localProduct = {};
+      this.localProduct = { ...this.getActualProduct };
     },
     saveChanges() {
-      this.addActualProduct(this.localProduct);
-      const newProducts = this.getProducts.map((p) => {
-        if (p.id === this.localProduct.id) return this.localProduct;
-        return p;
-      });
-      this.setProducts(newProducts);
+      this.addActualProduct({ ...this.localProduct });
+
+      const indexToUpdate = this.getProducts.findIndex(
+        (p) => p.id === this.localProduct.id
+      );
+      if (indexToUpdate !== -1) {
+        const updatedProducts = [...this.getProducts];
+        updatedProducts[indexToUpdate] = { ...this.localProduct };
+        this.setProducts(updatedProducts);
+      }
+
       this.localProduct = {};
     },
   },

@@ -1,22 +1,21 @@
 import { createLocalVue } from "@vue/test-utils";
+// const { expect } = require("chai");
+// const { mutations } = require("./mutations");
+// const { describe, it } = require("mocha");
 import { expect } from "chai";
 import { describe, it } from "mocha";
 import Vuex from "vuex";
-import { mutations } from "./store";
+import { mutations } from "./index";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-// destructure assign `mutations`
-const { increment } = mutations;
+const { setProducts } = mutations;
 
 describe("mutations", () => {
-  it("INCREMENT", () => {
-    // mock state
-    const state = { count: 0 };
-    // apply mutation
-    increment(state);
-    // assert result
-    expect(state.count).to.equal(1);
+  it("setProducts", () => {
+    const state = { products: 0 };
+    setProducts(state);
+    expect(state.products).to.equal(0);
   });
 });
