@@ -1,4 +1,4 @@
-// Importe as funções a serem testadas
+/* eslint-disable no-undef */
 import { fetchProducts, reFetchProducts } from "@/store/actions";
 
 describe("Testes para fetchProducts", () => {
@@ -7,17 +7,14 @@ describe("Testes para fetchProducts", () => {
     const _state = {};
     const mockProducts = [{ id: 1, title: "Product 1" }];
 
-    // Mock da função fetch
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockProducts),
       })
     );
 
-    // Chame a função fetchProducts com o mock do commit e _state
     await fetchProducts({ commit, _state });
 
-    // Verifique se commit foi chamado corretamente
     expect(commit).toHaveBeenCalledWith("setProducts", mockProducts);
     expect(localStorage.getItem("products")).toBeDefined();
   });
@@ -27,13 +24,10 @@ describe("Testes para fetchProducts", () => {
     const _state = {};
     const mockStoredProducts = [{ id: 1, title: "Product 1" }];
 
-    // Simule que há produtos armazenados no localStorage
     localStorage.setItem("products", JSON.stringify(mockStoredProducts));
 
-    // Chame a função fetchProducts com o mock do commit e _state
     await fetchProducts({ commit, _state });
 
-    // Verifique se commit foi chamado corretamente
     expect(commit).toHaveBeenCalledWith("setProducts", mockStoredProducts);
   });
 
@@ -42,13 +36,10 @@ describe("Testes para fetchProducts", () => {
     const _state = {};
     const errorMessage = "Erro ao buscar produtos";
 
-    // Mock da função fetch para retornar erro
     global.fetch = jest.fn(() => Promise.reject(errorMessage));
 
-    // Chame a função fetchProducts com o mock do commit e _state
     await fetchProducts({ commit, _state });
 
-    // Verifique se commit não foi chamado e se o console.error foi chamado com a mensagem de erro
     expect(commit).not.toHaveBeenCalled();
     expect(console.error).toHaveBeenCalledWith(
       "Erro ao buscar produtos:",
@@ -63,16 +54,13 @@ describe("Testes para reFetchProducts", () => {
     const _state = {};
     const mockOriginalProducts = [{ id: 1, title: "Product 1" }];
 
-    // Simule que há produtos originais no localStorage
     localStorage.setItem(
       "originalProducts",
       JSON.stringify(mockOriginalProducts)
     );
 
-    // Chame a função reFetchProducts com o mock do commit e _state
     await reFetchProducts({ commit, _state });
 
-    // Verifique se commit foi chamado corretamente
     expect(commit).toHaveBeenCalledWith("setProducts", mockOriginalProducts);
     expect(commit).toHaveBeenCalledWith("addActualProduct", {});
   });
@@ -82,20 +70,16 @@ describe("Testes para reFetchProducts", () => {
     const _state = {};
     const mockFetchedProducts = [{ id: 1, title: "Product 1" }];
 
-    // Simule que não há produtos originais no localStorage
     localStorage.removeItem("originalProducts");
 
-    // Mock da função fetch
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockFetchedProducts),
       })
     );
 
-    // Chame a função reFetchProducts com o mock do commit e _state
     await reFetchProducts({ commit, _state });
 
-    // Verifique se commit foi chamado corretamente
     expect(commit).toHaveBeenCalledWith("setProducts", mockFetchedProducts);
     expect(commit).toHaveBeenCalledWith("addActualProduct", {});
   });
@@ -105,13 +89,10 @@ describe("Testes para reFetchProducts", () => {
     const _state = {};
     const errorMessage = "Erro ao buscar produtos";
 
-    // Mock da função fetch para retornar erro
     global.fetch = jest.fn(() => Promise.reject(errorMessage));
 
-    // Chame a função reFetchProducts com o mock do commit e _state
     await reFetchProducts({ commit, _state });
 
-    // Verifique se commit não foi chamado e se o console.error foi chamado com a mensagem de erro
     expect(commit).not.toHaveBeenCalled();
     expect(console.error).toHaveBeenCalledWith(
       "Erro ao buscar produtos:",
