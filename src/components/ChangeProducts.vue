@@ -53,6 +53,7 @@
     </div>
     <div class="flex mt-32 justify-left">
       <button
+        id="salveButton"
         form="changer"
         type="button"
         @click="saveChanges"
@@ -62,6 +63,7 @@
       </button>
       <button
         form="changer"
+        id="cancelButton"
         type="button"
         @click="cancelChanges"
         class="px-4 py-2 bg-black text-white rounded hover:bg-dark-400"
