@@ -32,10 +32,11 @@
         >Price:</label
       >
       <input
-        type="text"
+        type="number"
         name="price"
-        id="price"
         v-model="localProduct.price"
+        @input="validateInput($event, 'price')"
+        id="price"
         class="w-full border border-gray-300 rounded px-3 py-2"
       />
     </div>
@@ -44,10 +45,13 @@
         Discount:
       </label>
       <input
-        type="text"
+        type="number"
         name="disc"
         id="disc"
+        @input="validateInput($event, 'discount')"
         v-model="localProduct.discount"
+        max="100"
+        min="0"
         class="w-full border border-gray-300 rounded px-3 py-2"
       />
     </div>
@@ -91,24 +95,50 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["addActualProduct", "setProducts"]),
+    ...mapMutations(["addActualProduct", "setProducts", "pushProducts"]),
     ...mapActions(["reFetchProducts"]),
+    validateInput(event, inputType) {
+      let inputValue = event.target.value;
+
+      const newNum = inputValue.replace(/\D/g, "");
+      if (inputType === "price") {
+        this.localProduct.price = newNum;
+      }
+
+      if (inputType === "discount") {
+        let numericValue = parseInt(newNum);
+        if (numericValue > 100 || isNaN(numericValue)) event.target.value = 100;
+        if (numericValue < 0) event.target.value = 0;
+        this.localProduct.discount = event.target.value;
+      }
+    },
     async cancelChanges() {
-      await this.reFetchProducts();
-      this.localProduct = { ...this.getActualProduct };
+      // await this.reFetchProducts();
+      this.addActualProduct({});
+      this.localProduct = {};
     },
     saveChanges() {
+      if (!this.localProduct?.id) {
+        console.log(this.localProduct);
+        this.pushProducts(this.localProduct);
+        this.addActualProduct({});
+        this.localProduct = {};
+        return;
+      }
       this.addActualProduct({ ...this.localProduct });
 
+      console.log(this.localProduct.id, "ID DE LOCALPRODUCTS");
       const indexToUpdate = this.getProducts.findIndex(
         (p) => p.id === this.localProduct.id
       );
       if (indexToUpdate !== -1) {
         const updatedProducts = [...this.getProducts];
+        console.log(updatedProducts[indexToUpdate]);
         updatedProducts[indexToUpdate] = { ...this.localProduct };
+        console.log(updatedProducts[indexToUpdate]);
         this.setProducts(updatedProducts);
       }
-
+      this.addActualProduct({});
       this.localProduct = {};
     },
   },
