@@ -26,11 +26,12 @@
                 <th class="p-2">Discount</th>
               </tr>
             </thead>
-            <tbody class="bg-whitesmoke text-left text-black">
+            <tbody class="text-left text-black">
               <tr
-                v-for="product in getProducts"
+                v-for="(product, index) in getProducts"
                 :key="product.id"
                 class="border-b"
+                :class="index % 2 === 0 ? 'bg-gray-100' : 'bg-white'"
               >
                 <td class="p-2">
                   <input
@@ -46,13 +47,13 @@
                 >
                   {{ product.description }}
                 </td>
-                <td class="p-2">{{ product.price }}</td>
+                <td class="p-2">{{ Number(product.price).toFixed(2) }}</td>
                 <td class="p-2">{{ product.discount }}%</td>
                 <td class="p-2">
                   <button
                     @click="addToActualProducts(product)"
                     type="button"
-                    class="flex items-center justify-center px-4 py-2 bg-white text-white text-16 cursor-pointer"
+                    class="flex items-center justify-center px-4 py-2 bg-transparent text-white text-16 cursor-pointer"
                   >
                     <svg
                       class="w-6 h-6 mr-2"
@@ -60,7 +61,7 @@
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <rect width="24" height="24" fill="white" />
+                      <rect width="24" height="24" fill="bg-transparent" />
                       <path
                         d="M9.5 7L14.5 12L9.5 17"
                         stroke="#000000"

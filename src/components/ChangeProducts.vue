@@ -32,12 +32,13 @@
         >Price:</label
       >
       <input
-        type="number"
+        type="text"
         name="price"
         v-model="localProduct.price"
         @input="validateInput($event, 'price')"
         id="price"
         class="w-full border border-gray-300 rounded px-3 py-2"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
       />
     </div>
     <div class="mb-4">
@@ -100,9 +101,9 @@ export default {
     validateInput(event, inputType) {
       let inputValue = event.target.value;
 
-      const newNum = inputValue.replace(/\D/g, "");
+      const newNum = inputValue.replace(/[^\d.,]/g, "");
       if (inputType === "price") {
-        this.localProduct.price = newNum;
+        this.localProduct.price = Number(newNum).toFixed(2);
       }
 
       if (inputType === "discount") {
