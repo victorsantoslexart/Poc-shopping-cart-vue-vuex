@@ -135,7 +135,7 @@ export default {
         !this.localProduct.price ||
         !this.localProduct.discount
       ) {
-        alert("Por favor, preencha todos os campos antes de salvar.");
+        alert("Please fill in all fields before saving.");
         return;
       }
       if (!this.localProduct?.id) {
