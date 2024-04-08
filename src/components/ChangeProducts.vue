@@ -10,6 +10,7 @@
       <input
         type="text"
         name="name"
+        required
         id="name"
         v-model="localProduct.title"
         class="w-full border border-gray-300 rounded px-3 py-2"
@@ -21,6 +22,7 @@
       >
       <textarea
         type="text"
+        required
         name="desc"
         id="desc"
         v-model="localProduct.description"
@@ -33,6 +35,7 @@
       >
       <input
         type="text"
+        required
         name="price"
         v-model="localProduct.price"
         @input="validateInput($event, 'price')"
@@ -47,6 +50,7 @@
       </label>
       <input
         type="number"
+        required
         name="disc"
         id="disc"
         @input="validateInput($event, 'discount')"
@@ -60,7 +64,7 @@
       <button
         id="salveButton"
         form="changer"
-        type="button"
+        type="submit"
         @click="saveChanges"
         class="mr-2 px-4 py-2 bg-black text-white rounded hover:bg-dark-600"
       >
@@ -101,13 +105,19 @@ export default {
     validateInput(event, inputType) {
       let inputValue = event.target.value;
 
-      const newNum = inputValue.replace(/[^\d.,]/g, "");
       if (inputType === "price") {
+        const newNum = inputValue.replace(/[^\d.,]/g, "");
+        if (isNaN(newNum)) {
+          event.target.value = 0;
+          this.localProduct.price = 0;
+          return;
+        }
         this.localProduct.price = Number(newNum).toFixed(2);
       }
 
       if (inputType === "discount") {
-        let numericValue = parseInt(newNum);
+        const newNum = inputValue.replace(/[^\d,]/g, "");
+        const numericValue = parseInt(newNum);
         if (numericValue > 100 || isNaN(numericValue)) event.target.value = 100;
         if (numericValue < 0) event.target.value = 0;
         this.localProduct.discount = event.target.value;
@@ -119,6 +129,15 @@ export default {
       this.localProduct = {};
     },
     saveChanges() {
+      if (
+        !this.localProduct.title ||
+        !this.localProduct.description ||
+        !this.localProduct.price ||
+        !this.localProduct.discount
+      ) {
+        alert("Por favor, preencha todos os campos antes de salvar.");
+        return;
+      }
       if (!this.localProduct?.id) {
         console.log(this.localProduct);
         this.pushProducts(this.localProduct);
